@@ -16,6 +16,43 @@ const MomentBrowser = ({ address }) => {
     set: ""
   });
 
+  const loadMoments = useCallback(async (userAddress) => {
+    setLoading(true);
+    setError(null);
+    try {
+      console.log("Fetching moments for address:", userAddress);
+      const result = await getUserMoments(userAddress);
+      console.log("Moments data received:", result);
+      setMoments(result || []);
+    } catch (err) {
+      console.error("Failed to load moments:", err);
+      setError("Failed to load moments. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  const checkCapability = useCallback(async (userAddress) => {
+    setLoading(true);
+    setError(null);
+    try {
+      console.log("Checking TopShot capability for address:", userAddress);
+      const hasCapability = await checkTopShotCapability(userAddress);
+      setHasCapability(hasCapability);
+
+      if (hasCapability) {
+        loadMoments(userAddress);
+      } else {
+        setLoading(false);
+        setError("This wallet does not have a TopShot collection. Make sure you've connected a wallet that owns NBA Top Shot moments.");
+      }
+    } catch (err) {
+      console.error("Failed to check capability:", err);
+      setLoading(false);
+      setError("Failed to check if wallet has TopShot collection.");
+    }
+  }, [loadMoments]);
+
   useEffect(() => {
     if (address) {
       checkCapability(address);
@@ -54,42 +91,6 @@ const MomentBrowser = ({ address }) => {
     }
   };
 
-  const loadMoments = useCallback(async (userAddress) => {
-    setLoading(true);
-    setError(null);
-    try {
-      console.log("Fetching moments for address:", userAddress);
-      const result = await getUserMoments(userAddress);
-      console.log("Moments data received:", result);
-      setMoments(result || []);
-    } catch (err) {
-      console.error("Failed to load moments:", err);
-      setError("Failed to load moments. Please try again.");
-    } finally {
-      setLoading(false);
-    }
-  }, []);
-
-  const checkCapability = useCallback(async (userAddress) => {
-    setLoading(true);
-    setError(null);
-    try {
-      console.log("Checking TopShot capability for address:", userAddress);
-      const hasCapability = await checkTopShotCapability(userAddress);
-      setHasCapability(hasCapability);
-
-      if (hasCapability) {
-        loadMoments(userAddress);
-      } else {
-        setLoading(false);
-        setError("This wallet does not have a TopShot collection. Make sure you've connected a wallet that owns NBA Top Shot moments.");
-      }
-    } catch (err) {
-      console.error("Failed to check capability:", err);
-      setLoading(false);
-      setError("Failed to check if wallet has TopShot collection.");
-    }
-  }, [loadMoments]);
 
   const handleFilterChange = (e) => {
     const { name, value } = e.target;

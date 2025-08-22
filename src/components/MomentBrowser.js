@@ -204,9 +204,9 @@ const MomentBrowser = ({ address }) => {
                   <span className="serial-number">#{moment.serialNumber}</span>
                 </div>
                 <div className="moment-image">
-                  {moment.imageURL && (
+                  {moment.img && (
                     <img 
-                      src={moment.imageURL} 
+                      src={moment.img} 
                       alt={`${moment.player} - ${moment.playCategory}`} 
                       onError={(e) => {
                         e.target.onerror = null;
@@ -220,9 +220,9 @@ const MomentBrowser = ({ address }) => {
                   <p><strong>Team:</strong> {moment.team}</p>
                   <p><strong>Play:</strong> {moment.playCategory}</p>
                   <p><strong>Date:</strong> {moment.date}</p>
-                  {moment.videoURL && (
+                  {moment.vid && (
                     <p>
-                      <a href={moment.videoURL} target="_blank" rel="noopener noreferrer" className="video-link">
+                      <a href={moment.vid} target="_blank" rel="noopener noreferrer" className="video-link">
                         Watch Video
                       </a>
                     </p>

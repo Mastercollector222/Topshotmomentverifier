@@ -170,11 +170,13 @@ export async function getUserMoments(address) {
           
           // If not found in play metadata, use default URLs based on play ID
           if imageURL == "" {
-            imageURL = "https://assets.nbatopshot.com/media/".concat(moment.data.playID.toString()).concat("/image.jpg")
+            // Use the official NBA Top Shot media URL format
+            imageURL = "https://assets.nbatopshot.com/editions/".concat(moment.data.playID.toString()).concat("/play_").concat(moment.data.playID.toString()).concat("_").concat(moment.data.setID.toString()).concat("_capture.jpg")
           }
           
           if videoURL == "" {
-            videoURL = "https://assets.nbatopshot.com/media/".concat(moment.data.playID.toString()).concat("/video.mp4")
+            // Use the official NBA Top Shot media URL format for videos
+            videoURL = "https://assets.nbatopshot.com/editions/".concat(moment.data.playID.toString()).concat("/play_").concat(moment.data.playID.toString()).concat("_video.mp4")
           }
 
           let momentData = MomentData(

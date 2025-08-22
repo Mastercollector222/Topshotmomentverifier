@@ -170,7 +170,9 @@ export function verifyMoments(moments, criteria) {
   };
 }
 
-export default {
+const verificationService = {
   verifyMoments,
   rules: Object.keys(verificationRules)
 };
+
+export default verificationService;

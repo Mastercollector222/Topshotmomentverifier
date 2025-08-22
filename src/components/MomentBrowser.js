@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { getUserMoments, checkTopShotCapability } from "../services/momentService";
 import "./MomentBrowser.css";
 
@@ -20,9 +20,10 @@ const MomentBrowser = ({ address }) => {
     if (address) {
       checkCapability(address);
     }
-  }, [address]);
+  }, [address, checkCapability]);
 
   // Function to test with a known TopShot-owning address
+  // eslint-disable-next-line no-unused-vars
   const testWithKnownAddress = async () => {
     setLoading(true);
     setError(null);
@@ -53,7 +54,23 @@ const MomentBrowser = ({ address }) => {
     }
   };
 
-  const checkCapability = async (userAddress) => {
+  const loadMoments = useCallback(async (userAddress) => {
+    setLoading(true);
+    setError(null);
+    try {
+      console.log("Fetching moments for address:", userAddress);
+      const result = await getUserMoments(userAddress);
+      console.log("Moments data received:", result);
+      setMoments(result || []);
+    } catch (err) {
+      console.error("Failed to load moments:", err);
+      setError("Failed to load moments. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  const checkCapability = useCallback(async (userAddress) => {
     setLoading(true);
     setError(null);
     try {
@@ -72,23 +89,7 @@ const MomentBrowser = ({ address }) => {
       setLoading(false);
       setError("Failed to check if wallet has TopShot collection.");
     }
-  };
-
-  const loadMoments = async (userAddress) => {
-    setLoading(true);
-    setError(null);
-    try {
-      console.log("Fetching moments for address:", userAddress);
-      const result = await getUserMoments(userAddress);
-      console.log("Moments data received:", result);
-      setMoments(result || []);
-    } catch (err) {
-      console.error("Failed to load moments:", err);
-      setError("Failed to load moments. Please try again.");
-    } finally {
-      setLoading(false);
-    }
-  };
+  }, [loadMoments]);
 
   const handleFilterChange = (e) => {
     const { name, value } = e.target;

@@ -1,4 +1,5 @@
 import * as fcl from "@onflow/fcl";
+// eslint-disable-next-line no-unused-vars
 import * as t from "@onflow/types";
 
 // Rate limiting implementation

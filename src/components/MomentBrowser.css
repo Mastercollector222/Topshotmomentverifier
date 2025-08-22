@@ -1,0 +1,185 @@
+.moment-browser {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.moment-browser h2 {
+  margin-bottom: 20px;
+  color: #333;
+  text-align: center;
+}
+
+.debug-section {
+  margin: 10px 0 20px;
+  padding: 10px;
+  background-color: #f0f8ff;
+  border: 1px dashed #0066cc;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.test-button {
+  background-color: #0066cc;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 16px;
+  cursor: pointer;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.test-button:hover {
+  background-color: #0055aa;
+}
+
+.test-button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+.debug-section small {
+  display: block;
+  color: #666;
+  font-size: 0.8rem;
+}
+
+.connect-prompt, .loading, .error, .no-moments {
+  text-align: center;
+  padding: 40px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  margin: 20px 0;
+}
+
+.error {
+  color: #dc3545;
+  background-color: #f8d7da;
+}
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-bottom: 20px;
+  padding: 15px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+}
+
+.filter-item {
+  display: flex;
+  flex-direction: column;
+  min-width: 200px;
+}
+
+.filter-item label {
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.filter-item select {
+  padding: 8px;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+}
+
+.moments-count {
+  margin-bottom: 15px;
+  font-style: italic;
+}
+
+.moment-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.moment-card {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease;
+  background-color: #fff;
+}
+
+.moment-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.moment-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 15px;
+  background-color: #f0f0f0;
+  border-bottom: 1px solid #ddd;
+}
+
+.moment-header h3 {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.serial-number {
+  font-weight: bold;
+  color: #6c757d;
+}
+
+.moment-image {
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f0f0f0;
+}
+
+.moment-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.moment-image img:hover {
+  transform: scale(1.05);
+}
+
+.moment-details {
+  padding: 15px;
+}
+
+.moment-details p {
+  margin: 8px 0;
+}
+
+.video-link {
+  display: inline-block;
+  background-color: #e74c3c;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 4px;
+  text-decoration: none;
+  margin-top: 5px;
+  font-weight: bold;
+  transition: background-color 0.2s ease;
+}
+
+.video-link:hover {
+  background-color: #c0392b;
+}
+
+@media (max-width: 768px) {
+  .moment-grid {
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  }
+  
+  .filters {
+    flex-direction: column;
+  }
+}

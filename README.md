@@ -1,70 +1,125 @@
-# Getting Started with Create React App
+# NBA Top Shot Moment Verifier
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Overview
 
-## Available Scripts
+NBA Top Shot Moment Verifier is a web application that allows users to connect their Flow blockchain wallet and verify ownership of NBA Top Shot moments. The application provides two main features:
 
-In the project directory, you can run:
+1. **Moment Browser**: View all NBA Top Shot moments in your collection with filtering options
+2. **Ownership Verification**: Verify ownership of specific moments based on customizable criteria
 
-### `npm start`
+## Features
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- **Wallet Integration**: Connect your Flow blockchain wallet (Blocto, Lilico, etc.)
+- **Moment Display**: View all your NBA Top Shot moments with detailed information
+- **Filtering**: Filter moments by player, team, set, and more
+- **Verification Rules**: Verify ownership based on various criteria:
+  - Owning moments from specific sets
+  - Owning moments of specific players
+  - Owning moments from specific teams
+  - Owning a minimum number of moments
+  - Owning moments with low serial numbers
+  - Owning specific play categories (dunks, assists, etc.)
+  - Owning specific moment IDs
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Technology Stack
 
-### `npm test`
+- **Frontend**: React.js
+- **Blockchain Integration**: Flow Client Library (FCL)
+- **Smart Contract Interaction**: Cadence scripts
+- **Styling**: Custom CSS
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Prerequisites
 
-### `npm run build`
+- Node.js (v14 or higher)
+- npm or yarn
+- A Flow blockchain wallet (Blocto, Lilico, etc.)
+- NBA Top Shot moments in your collection (for full functionality)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Installation
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+1. Clone the repository
+   ```
+   git clone https://github.com/yourusername/topshot-verifier.git
+   cd topshot-verifier
+   ```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+2. Install dependencies
+   ```
+   npm install
+   ```
 
-### `npm run eject`
+3. Start the development server
+   ```
+   npm start
+   ```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+4. Open [http://localhost:3000](http://localhost:3000) in your browser
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Usage
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+1. Click "Connect Wallet" to authenticate with your Flow wallet
+2. Browse your NBA Top Shot moments in the Moment Browser tab
+3. Use filters to find specific moments by player, team, or set
+4. Click on moment videos to view the full highlight
+5. Use the Verification tab to verify ownership of specific moments
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## Flow Blockchain Configuration
 
-## Learn More
+The application is configured to work with Flow mainnet by default. The configuration includes:
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+- Access Node: https://rest-mainnet.onflow.org
+- Contract Addresses:
+  - TopShot: 0x0b2a3299cc857e29
+  - MetadataViews: 0x1d7e57aa55817448
+  - NonFungibleToken: 0x1d7e57aa55817448
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Cadence Scripts
 
-### Code Splitting
+The application uses the following Cadence scripts to interact with the NBA Top Shot smart contract:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+### Get User Moments
+```cadence
+import TopShot from 0x0b2a3299cc857e29
 
-### Analyzing the Bundle Size
+pub fun main(user: Address): [MomentData] {
+  let account = getAccount(user)
+  let momentCollection = account.capabilities.borrow<&{TopShot.MomentCollectionPublic}>(/public/MomentCollection)
+                          ?? panic("User does not have a TopShot Collection")
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+  // Return all moments with metadata
+  // ...
+}
+```
 
-### Making a Progressive Web App
+### Verify Specific Moment Ownership
+```cadence
+import TopShot from 0x0b2a3299cc857e29
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+pub fun main(address: Address, momentID: UInt64): Bool {
+  let account = getAccount(address)
+  
+  if let collection = account.capabilities.borrow<&{TopShot.MomentCollectionPublic}>(/public/MomentCollection) {
+    return collection.getIDs().contains(momentID)
+  }
+  
+  return false
+}
+```
 
-### Advanced Configuration
+## Contributing
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+Contributions are welcome! Please feel free to submit a Pull Request.
 
-### Deployment
+## License
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+This project is licensed under the MIT License - see the LICENSE file for details.
 
-### `npm run build` fails to minify
+## Acknowledgments
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- NBA Top Shot for the NFT platform
+- Flow blockchain for the underlying technology
+- The Flow community for support and resources
+- [Flow Blockchain](https://flow.com/)
+- [NBA Top Shot](https://nbatopshot.com/)
+- [Flow Client Library](https://docs.onflow.org/fcl/)
+- [Emerald Academy](https://academy.ecdao.org/) for Cadence examples

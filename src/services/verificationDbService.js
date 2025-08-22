@@ -7,7 +7,6 @@ import {
   where, 
   updateDoc, 
   doc, 
-  getDoc, 
   serverTimestamp 
 } from 'firebase/firestore';
 
@@ -126,7 +125,9 @@ export const getVerifiedAddresses = async () => {
   }
 };
 
-export default {
+const verificationService = {
   verifyEdwardsMomentOwnership,
   getVerifiedAddresses
 };
+
+export default verificationService;

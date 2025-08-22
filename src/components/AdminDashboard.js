@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { getVerifiedAddresses } from '../services/verificationDbService';
 import { useAdmin } from '../hooks/useAdmin';
 import { 
@@ -34,7 +34,7 @@ const AdminDashboard = () => {
   const [password, setPassword] = useState('');
   const [loginError, setLoginError] = useState(null);
 
-  const fetchVerifiedUsers = async () => {
+  const fetchVerifiedUsers = useCallback(async () => {
     if (!isAdmin) return;
     
     try {
@@ -48,13 +48,13 @@ const AdminDashboard = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [isAdmin]);
 
   useEffect(() => {
     if (isAdmin) {
       fetchVerifiedUsers();
     }
-  }, [isAdmin]);
+  }, [isAdmin, fetchVerifiedUsers]);
   
   const handleLoginOpen = () => {
     setLoginOpen(true);

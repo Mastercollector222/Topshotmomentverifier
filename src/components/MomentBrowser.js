@@ -220,6 +220,9 @@ const MomentBrowser = ({ address }) => {
                   <p><strong>Team:</strong> {moment.team}</p>
                   <p><strong>Play:</strong> {moment.playCategory}</p>
                   <p><strong>Date:</strong> {moment.date}</p>
+                  <p><strong>ID:</strong> {moment.id}</p>
+                  <p><strong>Serial:</strong> {moment.serialNumber}</p>
+                  <p><strong>Image URL:</strong> {moment.img}</p>
                   {moment.vid && (
                     <p>
                       <a href={moment.vid} target="_blank" rel="noopener noreferrer" className="video-link">

@@ -1,0 +1,11 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Allow public read access to verified users collection
+    match /verifiedUsers/{document=**} {
+      allow read: if true;
+      // Allow public write access for verification
+      allow write: if true;
+    }
+  }
+}

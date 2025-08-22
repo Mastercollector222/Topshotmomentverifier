@@ -5,13 +5,15 @@ import './config/fcl';
 import Authentication from './components/Authentication';
 import MomentBrowser from './components/MomentBrowser';
 import VerificationWidget from './components/VerificationWidget';
+import EdwardsMomentVerifier from './components/EdwardsMomentVerifier';
+import AdminDashboard from './components/AdminDashboard';
 import { getUserMoments } from './services/momentService';
 
 function App() {
   const [user, setUser] = useState({ loggedIn: false });
   const [moments, setMoments] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [activeTab, setActiveTab] = useState('browse'); // 'browse' or 'verify'
+  const [activeTab, setActiveTab] = useState('browse'); // 'browse', 'verify', 'edwards', or 'admin'
 
   useEffect(() => {
     fcl.currentUser.subscribe(setUser);
@@ -57,6 +59,18 @@ function App() {
         >
           Verify Ownership
         </button>
+        <button 
+          className={`tab-button ${activeTab === 'edwards' ? 'active' : ''}`}
+          onClick={() => setActiveTab('edwards')}
+        >
+          Edwards Moment
+        </button>
+        <button 
+          className={`tab-button ${activeTab === 'admin' ? 'active' : ''}`}
+          onClick={() => setActiveTab('admin')}
+        >
+          Admin
+        </button>
       </div>
 
       <main>
@@ -73,6 +87,14 @@ function App() {
             
             {activeTab === 'verify' && (
               <VerificationWidget address={user.addr} moments={moments} />
+            )}
+            
+            {activeTab === 'edwards' && (
+              <EdwardsMomentVerifier requiredCount={5} />
+            )}
+            
+            {activeTab === 'admin' && (
+              <AdminDashboard />
             )}
           </>
         )}
